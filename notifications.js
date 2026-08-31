@@ -1,0 +1,1 @@
+const Notify={async permission(){if('Notification'in window&&Notification.permission==='default')try{await Notification.requestPermission()}catch{}},send(t,b){if('Notification'in window&&Notification.permission==='granted')try{new Notification(t,{body:b})}catch{}}};
