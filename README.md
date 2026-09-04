@@ -1,20 +1,27 @@
-# Hydroponic Control — Final
+# Hydroponic Control v3
 
-Mobile-first GitHub Pages/WebView app for GH001.
+Arabic is the default language and the complete UI is translated to Arabic/English/French.
 
-- Firebase Email/Password + Firestore
-- HiveMQ Cloud WebSocket
-- Arabic/English/French; Arabic default and RTL
-- Light/Dark/System
-- Home gauges: Air Temperature, Humidity, Water Temperature, Water Level, pH, EC
-- Data charts 1H/6H/24H/7D
-- Control: Pump 1 NFT, Pump 2 Venturi, Pump 3 tank fill, Pump 4 Pad Cooling, Fan 1, Fan 2
-- Manual confirmation and safety block for Pump 3 / Pad Cooling manual ON
-- Growth groups with leafy/fruiting templates, editable stages, seed date, reminder time, daily pH/EC before/after, harvest and PDF
-- Firebase cloud persistence for app settings and growth records
-- MQTT topics: hydroponic/GH001/{sensors,state,config,config/state,command,ack,availability}
-- Browser/Android notification API support
+## Firebase
+Replace Firestore Rules with `firestore.rules`. The rules restrict each signed-in user to their own `/users/{uid}` tree.
 
-MQTT WebSocket: wss://99580666d99a4632b4a1d5087e22d494.s1.eu.hivemq.cloud:8884/mqtt
-Username default: hydro_app
-The MQTT password is entered once in Settings and stored locally; it is not sent to Firebase.
+## MQTT
+Host: `99580666d99a4632b4a1d5087e22d494.s1.eu.hivemq.cloud`
+WebSocket: `8884`
+Username: `hydro_app`
+Password is never included in the repository. The user enters it once in Settings. It is stored in localStorage only when “remember” is enabled; otherwise sessionStorage is used.
+
+Topics:
+- hydroponic/GH001/sensors
+- hydroponic/GH001/state
+- hydroponic/GH001/config
+- hydroponic/GH001/config/state
+- hydroponic/GH001/command
+- hydroponic/GH001/ack
+- hydroponic/GH001/availability
+
+## Growth
+Growth is independent of ESP32/Nano. Groups and manual pH/EC records are stored in Firestore under the authenticated user's UID.
+
+
+V19: Firebase Cloud Messaging Web Push background support using the provided VAPID public key. Registers firebase-messaging-sw.js and stores the current FCM token under users/{uid}/pushTokens/{deviceId}.
